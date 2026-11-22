@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>리얼미 RealMe</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 25px;
+  font-family: Arial, sans-serif;
+  background: #f3f4ff;
+  color: #30334a;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  padding: 25px;
+}
+
+h1 {
+  color: #6875d5;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px #dfe1f0;
+}
+
+.question {
+  margin: 25px 0;
+}
+
+select, input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #d5d8e8;
+  border-radius: 9px;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #6875d5;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #505dbb;
+}
+
+#result {
+  display: none;
+  line-height: 1.8;
+}
+
+.result-title {
+  color: #6875d5;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.tip {
+  background: #eff0ff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.notice {
+  color: #777;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <h1>REALME</h1>
+  <h2>나를 더 긍정적으로 바라보는 시간</h2>
+  <p>SNS 속 타인과의 비교보다 나 자신의 가치를 발견해 봐요.</p>
+</header>
+
+<div class="card">
+  <h2>나의 SNS 이용 습관</h2>
+  <p>최근 일주일을 떠올리며 답해 주세요.</p>
+
+  <div class="question">
+    <label>하루 평균 SNS 이용 시간은 몇 시간인가요?</label>
+    <input type="number" id="hours" min="0" max="24"
+           placeholder="예: 3">
+  </div>
+
+  <div class="question">
+    <label>1. SNS에서 다른 사람과 나를 비교하는 편인가요?</label>
+    <select id="compare">
+      <option value="">선택해 주세요</option>
+      <option value="1">1점 - 거의 그렇지 않다</option>
+      <option value="2">2점 - 그렇지 않은 편이다</option>
+      <option value="3">3점 - 보통이다</option>
+      <option value="4">4점 - 그런 편이다</option>
+      <option value="5">5점 - 매우 그렇다</option>
+    </select>
+  </div>
+
+  <div class="question">
+    <label>2. SNS를 본 뒤 스트레스나 속상함을 느끼나요?</label>
+    <select id="stress">
+      <option value="">선택해 주세요</option>
+      <option value="1">1점 - 거의 그렇지 않다</option>
+      <option value="2">2점 - 그렇지 않은 편이다</option>
+      <option value="3">3점 - 보통이다</option>
+      <option value="4">4점 - 그런 편이다</option>
+      <option value="5">5점 - 매우 그렇다</option>
+    </select>
+  </div>
+
+  <div class="question">
+    <label>3. 좋아요나 댓글 등 다른 사람의 반응을 신경 쓰나요?</label>
+    <select id="reaction">
+      <option value="">선택해 주세요</option>
+      <option value="1">1점 - 거의 그렇지 않다</option>
+      <option value="2">2점 - 그렇지 않은 편이다</option>
+      <option value="3">3점 - 보통이다</option>
+      <option value="4">4점 - 그런 편이다</option>
+      <option value="5">5점 - 매우 그렇다</option>
+    </select>
+  </div>
+
+  <div class="question">
+    <label>4. SNS를 이용한 뒤에도 나의 장점을 긍정적으로 생각하나요?</label>
+    <select id="positive">
+      <option value="">선택해 주세요</option>
+      <option value="1">1점 - 거의 그렇지 않다</option>
+      <option value="2">2점 - 그렇지 않은 편이다</option>
+      <option value="3">3점 - 보통이다</option>
+      <option value="4">4점 - 그런 편이다</option>
+      <option value="5">5점 - 매우 그렇다</option>
+    </select>
+  </div>
+
+  <div class="question">
+    <label>오늘의 감정 기록 (선택)</label>
+    <textarea id="diary" rows="4"
+      placeholder="오늘 SNS를 이용하면서 느낀 감정을 적어 보세요."></textarea>
+  </div>
+
+  <button onclick="analyze()">내 결과 확인하기</button>
+  <p id="error" style="color:red;"></p>
+</div>
+
+<div class="card" id="result">
+  <h2>나의 리얼미 분석 결과</h2>
+
+  <p class="result-title" id="type"></p>
+  <p id="description"></p>
+  <p id="score"></p>
+
+  <div class="tip">
+    <h3>오늘의 자기긍정 활동</h3>
+    <p id="recommendation"></p>
+  </div>
+
+  <p class="notice">
+    이 결과는 자기이해를 돕기 위한 참고 자료이며,
+    정신건강 상태를 진단하는 결과가 아닙니다.
+  </p>
+
+  <button onclick="resetTest()">다시 검사하기</button>
+</div>
+
+</div>
+
+<script>
+function analyze() {
+
+  const hours = document.getElementById("hours").value;
+  const compare = Number(document.getElementById("compare").value);
+  const stress = Number(document.getElementById("stress").value);
+  const reaction = Number(document.getElementById("reaction").value);
+  const positive = Number(document.getElementById("positive").value);
+
+  const error = document.getElementById("error");
+
+  // 입력값 확인
+  if (
+    hours === "" || Number(hours) < 0 || Number(hours) > 24 ||
+    !compare || !stress || !reaction || !positive
+  ) {
+    error.innerText = "모든 필수 항목을 올바르게 입력해 주세요.";
+    return;
+  }
+
+  error.innerText = "";
+
+  // 점수 계산
+  const total = compare + stress + reaction + (6 - positive);
+
+  let type = "";
+  let description = "";
+  let recommendation = "";
+
+  // 점수에 따른 유형 분류
+  if (total <= 9) {
+
+    type = "나답게 균형을 지키는 유형";
+    description =
+      "SNS를 이용하면서도 자신의 감정과 가치를 비교적 잘 지키고 있어요.";
+
+    recommendation =
+      "오늘 내가 잘한 일 세 가지를 기록해 보세요. " +
+      "지금처럼 나에게 도움이 되는 방식으로 SNS를 이용해 보세요.";
+
+  } else if (total <= 14) {
+
+    type = "균형을 찾아가는 유형";
+    description =
+      "가끔 다른 사람과 비교하거나 주변의 반응에 신경을 쓰는 모습이 있어요.";
+
+    recommendation =
+      "SNS를 본 뒤 기분이 달라졌다면 잠시 휴식을 가져 보세요. " +
+      "오늘의 작은 성취를 하나 기록해 보는 것도 좋아요.";
+
+  } else {
+
+    type = "자기돌봄이 필요한 유형";
+    description =
+      "SNS를 이용하면서 비교나 부정적인 감정을 느낄 때가 있을 수 있어요. " +
+      "자신을 탓하지 말고 천천히 조절해 봐요.";
+
+    recommendation =
+      "잠시 SNS에서 벗어나 좋아하는 활동을 해 보세요. " +
+      "다른 사람의 게시물이 나의 가치를 결정하지 않는다는 점을 기억해요.";
+
+  }
+
+  if (Number(hours) >= 4) {
+    recommendation +=
+      " 또한 SNS를 확인하지 않는 시간을 정해 나만의 활동에 집중해 보세요.";
+  }
+
+  // 결과 화면 출력
+  document.getElementById("type").innerText = type;
+  document.getElementById("description").innerText = description;
+  document.getElementById("score").innerText =
+    "비교 및 감정 관련 점수: " + total + "점 / 20점";
+  document.getElementById("recommendation").innerText =
+    recommendation;
+
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("result").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+// 다시 검사하기
+function resetTest() {
+
+  document.getElementById("hours").value = "";
+  document.getElementById("compare").value = "";
+  document.getElementById("stress").value = "";
+  document.getElementById("reaction").value = "";
+  document.getElementById("positive").value = "";
+  document.getElementById("diary").value = "";
+
+  document.getElementById("result").style.display = "none";
+  document.getElementById("error").innerText = "";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+</script>
+
+</body>
+</html>
