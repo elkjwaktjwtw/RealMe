@@ -4,298 +4,321 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>리얼미 RealMe</title>
-
+<title>RealMe - 나를 알아가는 시간</title>
 <style>
-* {
-  box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 25px;
   font-family: Arial, sans-serif;
-  background: #f3f4ff;
-  color: #30334a;
+  background: #f6f3ff;
+  color: #39334e;
 }
-
-.container {
-  max-width: 700px;
-  margin: auto;
-}
-
 header {
+  background: white;
+  padding: 18px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 12px #ddd5f2;
+}
+.logo { font-size: 25px; font-weight: bold; color: #8065c9; }
+header span { color: #887e9f; font-size: 13px; }
+main { max-width: 850px; margin: 35px auto; padding: 15px; }
+.welcome {
+  text-align: center;
+  padding: 25px 10px;
+}
+.welcome h1 { font-size: 30px; margin-bottom: 8px; }
+.welcome p { color: #817995; }
+.character {
+  width: 125px;
+  height: 125px;
+  margin: 20px auto;
+  border-radius: 50%;
+  background: linear-gradient(140deg,#d9caff,#a78be9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 75px;
+  box-shadow: 0 8px 25px #d8c8f2;
+}
+.panel {
+  background: white;
+  border-radius: 22px;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 5px 20px #e8e1f5;
+}
+h2 { font-size: 19px; }
+.chat {
+  height: 310px;
+  overflow-y: auto;
+  padding: 12px;
+  background: #faf9ff;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+.message {
+  max-width: 85%;
+  padding: 12px 15px;
+  border-radius: 16px;
+  margin: 10px 0;
+  line-height: 1.6;
+  font-size: 14px;
+}
+.bot {
+  background: #eee8ff;
+  border-bottom-left-radius: 4px;
+}
+.user {
+  background: #d9f0e8;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+button {
+  border: none;
+  border-radius: 13px;
+  padding: 12px 16px;
+  background: #8c72ce;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+button:hover { background: #7255b7; }
+.option {
+  background: #f0ebff;
+  color: #634d9d;
+}
+.option:hover { background: #dfd4fa; }
+input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ddd4ee;
+  border-radius: 12px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+.input-row { display: flex; gap: 8px; }
+.input-row input { flex: 1; min-width: 0; }
+.result {
+  background: #f4f0ff;
+  border-radius: 15px;
+  padding: 18px;
+  line-height: 1.8;
+  display: none;
+}
+.bar-bg {
+  height: 12px;
+  background: #e8e2f5;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.bar {
+  height: 100%;
+  background: #987bdc;
+  width: 0%;
+  transition: .5s;
+}
+.small { font-size: 12px; color: #938ba2; }
+footer {
   text-align: center;
   padding: 25px;
-}
-
-h1 {
-  color: #6875d5;
-}
-
-.card {
-  background: white;
-  padding: 25px;
-  margin-bottom: 20px;
-  border-radius: 18px;
-  box-shadow: 0 4px 15px #dfe1f0;
-}
-
-.question {
-  margin: 25px 0;
-}
-
-select, input, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  border: 1px solid #d5d8e8;
-  border-radius: 9px;
-  font-size: 15px;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  background: #6875d5;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #505dbb;
-}
-
-#result {
-  display: none;
-  line-height: 1.8;
-}
-
-.result-title {
-  color: #6875d5;
-  font-size: 23px;
-  font-weight: bold;
-}
-
-.tip {
-  background: #eff0ff;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 15px;
-}
-
-.notice {
-  color: #777;
-  font-size: 13px;
+  color: #9b93aa;
+  font-size: 12px;
 }
 </style>
 </head>
-
 <body>
-<div class="container">
 
 <header>
-  <h1>REALME</h1>
-  <h2>나를 더 긍정적으로 바라보는 시간</h2>
-  <p>SNS 속 타인과의 비교보다 나 자신의 가치를 발견해 봐요.</p>
+  <div class="logo">RealMe ✦</div>
+  <span>나를 알아가는 작은 습관</span>
 </header>
 
-<div class="card">
-  <h2>나의 SNS 이용 습관</h2>
-  <p>최근 일주일을 떠올리며 답해 주세요.</p>
+<main>
+  <section class="welcome">
+    <h1>오늘의 나는 어떤가요?</h1>
+    <p>다른 사람과 비교하기보다, 오늘의 나에게 집중해 봐요.</p>
+    <div class="character">🐰</div>
+    <b>안녕! 나는 리얼미의 마음 친구 미미야.</b>
+    <p>네 이야기를 듣고 함께 마음을 정리해 볼게!</p>
+  </section>
 
-  <div class="question">
-    <label>하루 평균 SNS 이용 시간은 몇 시간인가요?</label>
-    <input type="number" id="hours" min="0" max="24"
-           placeholder="예: 3">
-  </div>
+  <section class="panel">
+    <h2>💬 미미와 대화하기</h2>
+    <div class="chat" id="chat">
+      <div class="message bot">
+        안녕! 오늘 하루는 어땠어? 😊<br>
+        편하게 골라 줘!
+      </div>
+    </div>
+    <div class="options" id="options">
+      <button class="option" onclick="chooseMood('기분이 좋아')">😊 기분이 좋아</button>
+      <button class="option" onclick="chooseMood('그냥 평범해')">😐 그냥 평범해</button>
+      <button class="option" onclick="chooseMood('조금 우울해')">😥 조금 우울해</button>
+      <button class="option" onclick="chooseMood('스트레스를 받았어')">😣 스트레스를 받았어</button>
+    </div>
+    <div class="input-row">
+      <input id="messageInput" placeholder="미미에게 하고 싶은 말을 적어 봐">
+      <button onclick="sendMessage()">보내기</button>
+    </div>
+    <p class="small">미미의 답변은 입력한 내용에 따라 정해진 규칙으로 제공돼.</p>
+  </section>
 
-  <div class="question">
-    <label>1. SNS에서 다른 사람과 나를 비교하는 편인가요?</label>
-    <select id="compare">
-      <option value="">선택해 주세요</option>
-      <option value="1">1점 - 거의 그렇지 않다</option>
-      <option value="2">2점 - 그렇지 않은 편이다</option>
-      <option value="3">3점 - 보통이다</option>
-      <option value="4">4점 - 그런 편이다</option>
-      <option value="5">5점 - 매우 그렇다</option>
-    </select>
-  </div>
+  <section class="panel">
+    <h2>🌷 나의 SNS 사용 상태 확인</h2>
+    <p>최근 SNS를 사용하면서 다른 사람과 비교한 적이 얼마나 많았나요?</p>
+    <div class="options" id="compareOptions">
+      <button class="option" onclick="setCompare(1)">거의 없음</button>
+      <button class="option" onclick="setCompare(2)">가끔</button>
+      <button class="option" onclick="setCompare(3)">보통</button>
+      <button class="option" onclick="setCompare(4)">자주</button>
+      <button class="option" onclick="setCompare(5)">매우 자주</button>
+    </div>
+    <p>SNS를 사용한 후 부정적인 감정을 느낀 정도는 어떤가요?</p>
+    <div class="options" id="feelingOptions">
+      <button class="option" onclick="setFeeling(1)">거의 없음</button>
+      <button class="option" onclick="setFeeling(2)">조금</button>
+      <button class="option" onclick="setFeeling(3)">보통</button>
+      <button class="option" onclick="setFeeling(4)">많음</button>
+      <button class="option" onclick="setFeeling(5)">매우 많음</button>
+    </div>
+    <button style="margin-top:20px" onclick="checkStatus()">내 상태 확인하기</button>
+    <div class="result" id="result"></div>
+  </section>
 
-  <div class="question">
-    <label>2. SNS를 본 뒤 스트레스나 속상함을 느끼나요?</label>
-    <select id="stress">
-      <option value="">선택해 주세요</option>
-      <option value="1">1점 - 거의 그렇지 않다</option>
-      <option value="2">2점 - 그렇지 않은 편이다</option>
-      <option value="3">3점 - 보통이다</option>
-      <option value="4">4점 - 그런 편이다</option>
-      <option value="5">5점 - 매우 그렇다</option>
-    </select>
-  </div>
+  <section class="panel">
+    <h2>📊 오늘의 마음 기록</h2>
+    <p>오늘 선택한 감정 상태를 간단하게 확인할 수 있어.</p>
+    <div id="recordText">아직 기록이 없어. 미미와 먼저 대화해 봐!</div>
+    <div class="bar-bg"><div class="bar" id="emotionBar"></div></div>
+    <p class="small">기록은 현재 페이지에서만 유지되며 새로고침하면 사라져.</p>
+  </section>
+</main>
 
-  <div class="question">
-    <label>3. 좋아요나 댓글 등 다른 사람의 반응을 신경 쓰나요?</label>
-    <select id="reaction">
-      <option value="">선택해 주세요</option>
-      <option value="1">1점 - 거의 그렇지 않다</option>
-      <option value="2">2점 - 그렇지 않은 편이다</option>
-      <option value="3">3점 - 보통이다</option>
-      <option value="4">4점 - 그런 편이다</option>
-      <option value="5">5점 - 매우 그렇다</option>
-    </select>
-  </div>
-
-  <div class="question">
-    <label>4. SNS를 이용한 뒤에도 나의 장점을 긍정적으로 생각하나요?</label>
-    <select id="positive">
-      <option value="">선택해 주세요</option>
-      <option value="1">1점 - 거의 그렇지 않다</option>
-      <option value="2">2점 - 그렇지 않은 편이다</option>
-      <option value="3">3점 - 보통이다</option>
-      <option value="4">4점 - 그런 편이다</option>
-      <option value="5">5점 - 매우 그렇다</option>
-    </select>
-  </div>
-
-  <div class="question">
-    <label>오늘의 감정 기록 (선택)</label>
-    <textarea id="diary" rows="4"
-      placeholder="오늘 SNS를 이용하면서 느낀 감정을 적어 보세요."></textarea>
-  </div>
-
-  <button onclick="analyze()">내 결과 확인하기</button>
-  <p id="error" style="color:red;"></p>
-</div>
-
-<div class="card" id="result">
-  <h2>나의 리얼미 분석 결과</h2>
-
-  <p class="result-title" id="type"></p>
-  <p id="description"></p>
-  <p id="score"></p>
-
-  <div class="tip">
-    <h3>오늘의 자기긍정 활동</h3>
-    <p id="recommendation"></p>
-  </div>
-
-  <p class="notice">
-    이 결과는 자기이해를 돕기 위한 참고 자료이며,
-    정신건강 상태를 진단하는 결과가 아닙니다.
-  </p>
-
-  <button onclick="resetTest()">다시 검사하기</button>
-</div>
-
-</div>
+<footer>
+  RealMe · 나를 이해하고 긍정하는 시간<br>
+  이 서비스는 자기 성찰을 돕는 참고용이며 전문적인 상담이나 진단을 대신하지 않습니다.
+</footer>
 
 <script>
-function analyze() {
+let compare = 0;
+let feeling = 0;
+let mood = "";
+let records = [];
 
-  const hours = document.getElementById("hours").value;
-  const compare = Number(document.getElementById("compare").value);
-  const stress = Number(document.getElementById("stress").value);
-  const reaction = Number(document.getElementById("reaction").value);
-  const positive = Number(document.getElementById("positive").value);
+function addMessage(text, type) {
+  const chat = document.getElementById("chat");
+  const div = document.createElement("div");
+  div.className = "message " + type;
+  div.textContent = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
 
-  const error = document.getElementById("error");
+function chooseMood(value) {
+  mood = value;
+  addMessage(value, "user");
 
-  // 입력값 확인
-  if (
-    hours === "" || Number(hours) < 0 || Number(hours) > 24 ||
-    !compare || !stress || !reaction || !positive
-  ) {
-    error.innerText = "모든 필수 항목을 올바르게 입력해 주세요.";
+  let answer = "";
+  if (value === "기분이 좋아") {
+    answer = "좋은 하루를 보냈구나! 😊 오늘 기분이 좋았던 이유를 기억해 두면 좋겠어. 어떤 일이 가장 좋았어?";
+  } else if (value === "그냥 평범해") {
+    answer = "그렇구나! 특별한 일이 없어도 괜찮아. 평범한 하루도 소중하니까. 오늘 너 자신에게 칭찬 한마디 해 줄래?";
+  } else if (value === "조금 우울해") {
+    answer = "오늘 마음이 조금 무거웠구나. 그런 날도 있어. 잠깐 쉬면서 좋아하는 음악을 듣거나 편안한 활동을 해 보는 건 어때?";
+  } else {
+    answer = "스트레스가 있었구나. 어떤 일이었는지 천천히 생각해 봐도 좋아. 지금은 잠깐 SNS에서 벗어나 쉬어 보는 것도 괜찮아.";
+  }
+  addMessage(answer, "bot");
+  updateRecord();
+}
+
+function sendMessage() {
+  const input = document.getElementById("messageInput");
+  const value = input.value.trim();
+  if (!value) return;
+
+  addMessage(value, "user");
+  input.value = "";
+
+  let answer = "이야기해 줘서 고마워! 네가 느낀 감정을 무시하지 않아도 돼. 잠깐 쉬면서 지금 나에게 필요한 것이 무엇인지 생각해 보자.";
+
+  if (value.includes("비교") || value.includes("외모") || value.includes("부러")) {
+    answer = "SNS에서 다른 사람의 모습이 부럽게 느껴질 수 있어. 하지만 SNS에는 그 사람의 일상 중 일부만 보인다는 점을 기억해 줘. 너만의 장점도 분명히 있어!";
+  } else if (value.includes("공부") || value.includes("성적")) {
+    answer = "다른 사람의 성적과 나를 비교하면 속상할 수 있지. 하지만 사람마다 속도와 잘하는 분야는 달라. 오늘 네가 노력한 부분부터 찾아보자!";
+  } else if (value.includes("힘들") || value.includes("속상") || value.includes("슬퍼")) {
+    answer = "그랬구나. 네 감정을 억지로 괜찮다고 생각하지 않아도 돼. 믿을 수 있는 사람에게 마음을 이야기해 보는 것도 좋은 방법이야.";
+  } else if (value.includes("고마")) {
+    answer = "나도 네 이야기를 들을 수 있어서 좋아! 오늘도 너 자신을 조금 더 이해하는 시간을 가져 보자. 💜";
+  }
+
+  setTimeout(() => addMessage(answer, "bot"), 250);
+}
+
+function setCompare(value) {
+  compare = value;
+  addMessage("비교 빈도: " + value + "점", "user");
+}
+
+function setFeeling(value) {
+  feeling = value;
+  addMessage("부정적인 감정 정도: " + value + "점", "user");
+}
+
+function checkStatus() {
+  if (compare === 0 || feeling === 0) {
+    alert("두 항목을 모두 선택해 줘!");
     return;
   }
 
-  error.innerText = "";
+  let total = compare + feeling;
+  let title = "";
+  let advice = "";
 
-  // 점수 계산
-  const total = compare + stress + reaction + (6 - positive);
-
-  let type = "";
-  let description = "";
-  let recommendation = "";
-
-  // 점수에 따른 유형 분류
-  if (total <= 9) {
-
-    type = "나답게 균형을 지키는 유형";
-    description =
-      "SNS를 이용하면서도 자신의 감정과 가치를 비교적 잘 지키고 있어요.";
-
-    recommendation =
-      "오늘 내가 잘한 일 세 가지를 기록해 보세요. " +
-      "지금처럼 나에게 도움이 되는 방식으로 SNS를 이용해 보세요.";
-
-  } else if (total <= 14) {
-
-    type = "균형을 찾아가는 유형";
-    description =
-      "가끔 다른 사람과 비교하거나 주변의 반응에 신경을 쓰는 모습이 있어요.";
-
-    recommendation =
-      "SNS를 본 뒤 기분이 달라졌다면 잠시 휴식을 가져 보세요. " +
-      "오늘의 작은 성취를 하나 기록해 보는 것도 좋아요.";
-
+  if (total <= 4) {
+    title = "나답게 균형을 지키는 상태 🌱";
+    advice = "현재 SNS 사용 후 비교와 부정적인 감정이 적은 편이야. 지금처럼 너만의 생활을 소중히 여겨 봐!";
+  } else if (total <= 7) {
+    title = "균형을 찾아가는 상태 🌷";
+    advice = "가끔 SNS가 마음에 영향을 주는 것 같아. SNS를 본 뒤 기분이 어떤지 살펴보고, 좋아하는 취미에도 시간을 써 보자.";
   } else {
-
-    type = "자기돌봄이 필요한 유형";
-    description =
-      "SNS를 이용하면서 비교나 부정적인 감정을 느낄 때가 있을 수 있어요. " +
-      "자신을 탓하지 말고 천천히 조절해 봐요.";
-
-    recommendation =
-      "잠시 SNS에서 벗어나 좋아하는 활동을 해 보세요. " +
-      "다른 사람의 게시물이 나의 가치를 결정하지 않는다는 점을 기억해요.";
-
+    title = "자기돌봄이 필요한 상태 💜";
+    advice = "SNS를 사용한 후 다른 사람과 비교하거나 부정적인 감정을 느끼는 일이 잦은 것 같아. 잠시 SNS를 쉬고, 믿을 수 있는 사람과 이야기해 보는 건 어때?";
   }
 
-  if (Number(hours) >= 4) {
-    recommendation +=
-      " 또한 SNS를 확인하지 않는 시간을 정해 나만의 활동에 집중해 보세요.";
+  const result = document.getElementById("result");
+  result.style.display = "block";
+  result.innerHTML = "<h3>" + title + "</h3><p>" + advice + "</p><p><b>비교 빈도:</b> " + compare + "/5</p><p><b>부정적인 감정:</b> " + feeling + "/5</p><p class='small'>이 결과는 두 응답을 바탕으로 한 간단한 참고 정보이며 심리 상태를 진단하지 않아.</p>";
+
+  addMessage("상태 확인 결과를 정리했어! " + title + " 네 마음을 돌보는 작은 행동부터 시작해 보자.", "bot");
+
+  records.push({mood: mood || "미선택", score: total});
+  updateRecord();
+}
+
+function updateRecord() {
+  const text = document.getElementById("recordText");
+  if (mood) {
+    text.textContent = "오늘 선택한 기분: " + mood;
   }
-
-  // 결과 화면 출력
-  document.getElementById("type").innerText = type;
-  document.getElementById("description").innerText = description;
-  document.getElementById("score").innerText =
-    "비교 및 감정 관련 점수: " + total + "점 / 20점";
-  document.getElementById("recommendation").innerText =
-    recommendation;
-
-  document.getElementById("result").style.display = "block";
-
-  document.getElementById("result").scrollIntoView({
-    behavior: "smooth"
-  });
+  if (compare > 0 && feeling > 0) {
+    document.getElementById("emotionBar").style.width =
+      ((compare + feeling) / 10 * 100) + "%";
+    text.textContent = "오늘 기분: " + (mood || "미선택") +
+      " · SNS 비교 및 감정 점수: " + (compare + feeling) + "/10";
+  }
 }
 
-// 다시 검사하기
-function resetTest() {
-
-  document.getElementById("hours").value = "";
-  document.getElementById("compare").value = "";
-  document.getElementById("stress").value = "";
-  document.getElementById("reaction").value = "";
-  document.getElementById("positive").value = "";
-  document.getElementById("diary").value = "";
-
-  document.getElementById("result").style.display = "none";
-  document.getElementById("error").innerText = "";
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
+document.getElementById("messageInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") sendMessage();
+});
 </script>
-
 </body>
 </html>
